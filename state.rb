@@ -20,4 +20,18 @@ class State
 		@effect = :none
 		@reachable = true
 	end
+	def to_hash
+		{
+			"hue" =>	@hue,
+			"on" =>	@on,
+			"effect" => @effect.to_s,
+			"alert" =>	@alert.to_s,
+			"bri" =>	@bri,
+			"sat" => 	@sat,
+			"ct" => 	@ct,
+			"xy" =>	@xy,
+			"reachable" => @reachable,
+			"colormode" => @colormode.to_s
+		}
+	end
 end
