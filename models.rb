@@ -1,5 +1,6 @@
 require 'rubygems'
-require 'datamapper'
+require 'data_mapper'
+require 'dm-sqlite-adapter'
 
 DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/db.db")
 
@@ -11,7 +12,7 @@ class Light
 	property :type,	String, :required => true
 	property :name, String, :length => 0..32, :unique => true
 	property :modelid,	String, :length => 6..6
-	property :swversion	String, :length => 8..8
+	property :swversion,	String, :length => 8..8
 	has 1,	:pointsymbol
 
 end
@@ -30,7 +31,8 @@ class State
 	property :sat,	Integer
 	validates_within :sat,	:set => 0..255
 
-	property :xy, Array
+	property :x, Integer
+	property :y, Integer
 	# TODO: validate length
 
 	property :ct, Integer
@@ -41,10 +43,10 @@ class State
 	
 	property :reachable, Boolean, :required => true, :default => true
 
-	validates_presense_of :hue,	:if => lambda { |t| t.colormode == :hs}
-	validates_presense_of :sat,	:if => lambda { |t| t.colormode == :hs}
-	validates_presense_of :ct,	:if => lambda { |t| t.colormode == :ct}
-	validates_presense_of :xy,	:if => lambda { |t| t.colormode == :xy}
+	validates_presence_of :hue,	:if => lambda { |t| t.colormode == :hs}
+	validates_presence_of :sat,	:if => lambda { |t| t.colormode == :hs}
+	validates_presence_of :ct,	:if => lambda { |t| t.colormode == :ct}
+	validates_presence_of :xy,	:if => lambda { |t| t.colormode == :xy}
 end
 class PointSymbol
 	include DataMapper::Resource
