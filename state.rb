@@ -1,3 +1,4 @@
+require_relative 'errors'
 class State
 	attr_accessor :on #Boolean
 	attr_accessor :colormode #:xy :ct or :hs
