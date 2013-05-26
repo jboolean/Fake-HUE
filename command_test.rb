@@ -13,5 +13,12 @@ light1_to.flush
 
 pp JSON.parse(light1_from.gets)
 
+new_state = {"on" => true, "bri" => 255, "alert" => "lselect"}
+light1_to.puts ({"command" => "put state", "state" => new_state}.to_json)
+light1_to.flush
+
+pp JSON.parse(light1_from.gets)
+
 light1_to.puts ({"command" => "exit"}.to_json)
 light1_to.flush
+
