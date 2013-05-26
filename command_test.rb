@@ -19,6 +19,10 @@ light1_to.flush
 
 pp JSON.parse(light1_from.gets)
 
-light1_to.puts ({"command" => "exit"}.to_json)
+light1_to.puts ({"command" => "all"}.to_json)
 light1_to.flush
 
+pp JSON.parse(light1_from.gets)
+#EXIT
+light1_to.puts ({"command" => "exit"}.to_json)
+light1_to.flush

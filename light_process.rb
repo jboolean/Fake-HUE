@@ -20,17 +20,25 @@ class LightProcess
 			command = hash["command"]
 			puts "COMMAND: #{command}"
 			case command
+			#just get the name
 			when "name"
 				output.puts ({"name" => @light.name}.to_json)
+			#get all info, including state, per the api
 			when "all"
 				output.puts ({"all" => @light.to_hash}.to_json)
 			when "exit"
 				break
+			#set state - takes a "state" key to a hash of new values
 			when "put state"
 				result = updateState(hash["state"])
 				output.puts ({"put state" => result}.to_json)
+			#set attributes (rename) 
+			#takes a "name" key to a new name
+			when "put"
+				output.puts({"put" => updateName(hash["name"])}.to_json)
 			else
 				puts "ERROR: Invalid command:\n#{command}"
+				#TODO this will crash the program, handle nicely??
 			end
 			output.flush
 		end
@@ -44,11 +52,23 @@ class LightProcess
 	def updateState (new_state_elements)
 		output = Array.new
 		new_state_elements.each do |k,v|
+			#success message
 			output << {"success" =>
 					{"/lights/#{@light.id}/state/#{k}" => v}
 				}
+			#actually change the state
+			@light.state.send("#{k}=",v)
+			#TODO catch exceptions on setting and return errors
 		end
 		return output
+	end
+	
+	#changes the name and return a success message per the api
+	def updateName(newName)
+		@light.name=newName
+		[{"success" => 
+			{"lights/#{@light.id}/name" => newName}
+		}]
 	end
 end #class
 #start with ID and Name
