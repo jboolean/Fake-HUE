@@ -38,3 +38,9 @@ class InvalidJson < HueError
 	end
 end
 
+class UnauthorizedUser < HueError
+	def initialize
+		super(1, "unauthorized user")
+	end
+end
+
