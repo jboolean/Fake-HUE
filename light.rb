@@ -4,8 +4,8 @@ class Light
 	attr_reader	:id #Integer, unique
 	attr_accessor	:state #State, not sure if final or updates live
 	attr_accessor	:name #String, 0..32, unique
-	attr_accessor	:modelid #String 6..6
-	attr_accessor	:swversion #String 8..8
+	attr_reader	:modelid #String 6..6
+	attr_reader	:swversion #String 8..8
 	attr_accessor	:pointsymbol #PointSymbol
 	attr_reader	:type
 	def initialize(_id, _name)
@@ -27,7 +27,7 @@ class Light
 			"name" =>	@name,
 			"modelid" =>	@modelid,
 			"swversion" =>	@swversion,
-			#"pointsymbol"=> @pointsymbol.to_hash
+			"pointsymbol"=> @pointsymbol.to_hash
 		}
 	end
 
