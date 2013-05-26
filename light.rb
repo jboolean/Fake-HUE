@@ -1,4 +1,5 @@
 #contains a light's basic state info used in the api.
+require_relative 'state'
 class Light
 	attr_reader	:id #Integer, unique
 	attr_accessor	:state #State, not sure if final or updates live
@@ -11,8 +12,9 @@ class Light
 		@id = _id
 		@name = _name
 		@state = State.new
-		@modelid = 'uhhhhh' #TODO: What should this be?
-		@swversion = '0.0.0.01' #TODO: What should THIS be?
+		#Values are from my Hue
+		@modelid = 'LCT001' #TODO: What should this be?
+		@swversion = '65003148' #TODO: What should THIS be?
 		@type = "Simulated"
 		@pointsymbol = PointSymbol.new
 	end
@@ -25,7 +27,7 @@ class Light
 			"name" =>	@name,
 			"modelid" =>	@modelid,
 			"swversion" =>	@swversion,
-			"pointsymbol"=> @pointsymbol.to_hash
+			#"pointsymbol"=> @pointsymbol.to_hash
 		}
 	end
 
