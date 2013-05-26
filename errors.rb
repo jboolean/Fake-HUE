@@ -1,7 +1,7 @@
 class HueError < StandardError
 #if we had abstract classes
 #should define a type method and a description method
-	attr_reader type
+	attr_reader :type
 	def initialize (type, message)
 		super(message)
 		@type = type

@@ -1,3 +1,4 @@
+require_relative 'errors'
 require_relative 'light'
 require 'json'
 
@@ -53,13 +54,17 @@ class LightProcess
 	def updateState (new_state_elements)
 		output = Array.new
 		new_state_elements.each do |k,v|
+			address = "/lights/#{@light.id}/state/#{k}" 
+			begin
+			@light.state.send("#{k}=",v)
 			#success message
 			output << {"success" =>
-					{"/lights/#{@light.id}/state/#{k}" => v}
+					{address => v}
 				}
-			#actually change the state
-			@light.state.send("#{k}=",v)
-			#TODO catch exceptions on setting and return errors
+			rescue HueError => error
+			output << error.to_hash(address)
+			puts error.description
+			end
 		end
 		return output
 	end
