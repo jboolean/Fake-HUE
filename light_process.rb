@@ -49,6 +49,7 @@ class LightProcess
 	#takes a hash of new state attributes and applies them
 	#returns a list of hashes with the key "success" with value as a hash of the url to the parameter and the value of the parameter 
 	#alternatively, the key can be error and the value a hash with keys type (error code), address, and description (hr text)
+
 	def updateState (new_state_elements)
 		output = Array.new
 		new_state_elements.each do |k,v|
