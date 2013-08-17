@@ -63,9 +63,9 @@ class LightProcess
 				}
 			rescue HueError => error
 			output << error.to_hash(address)
-			puts error.description
 			end
 		end
+		puts output.inspect
 		return output
 	end
 	

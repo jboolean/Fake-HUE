@@ -4,12 +4,13 @@ class State
 	attr_reader :colormode #:xy :ct or :hs
 	attr_reader :hue #:Integer 0..65535
 	attr_reader :sat #Integer 0..255
-	attr_accessor :bri #Integer 0..255
+	attr_reader :bri #Integer 0..255
 	attr_reader :xy #[x,y] x,y in 0..1
 	attr_reader :ct #Integer, bulb-dependent. about 153..500 for philips
 	attr_reader :alert #:none, :select, or :lselect
 	attr_accessor :effect # :none or :colorloop
 	attr_accessor :reachable #Boolean, always true
+	attr_accessor :transitiontime #int, multiple of 100, in ms
 	def initialize
 		@on = false
 		@colormode = :hue
@@ -20,6 +21,8 @@ class State
 		@alert = :none
 		@effect = :none
 		@reachable = true
+		@bri = 255
+		@transitiontime = 400
 	end
 	def to_hash
 		{
@@ -45,6 +48,7 @@ class State
 		end
 	end
 	def hue=(value)
+		if !@on then raise DeviceOff.new("bri") end
 		if (0..65535) === value
 			@hue = value
 			@colormode = :hs
@@ -53,6 +57,7 @@ class State
 		end
 	end
 	def sat=(value)
+		if !@on then raise DeviceOff.new("bri") end
 		if (0..255) === value
 			@sat = value
 			@colormode = :hs
@@ -61,6 +66,7 @@ class State
 		end
 	end
 	def xy=(value)
+		if !@on then raise DeviceOff.new("xy") end
 		if value.length==2 && (0..1) === value[0] && (0..1) === value[1]
 			@xy = xy
 			@colormode = :xy
@@ -76,5 +82,19 @@ class State
 			raise InvalidValue.new("ct", value)
 		end
 	end
+	def bri=(value)
+		if !@on then raise DeviceOff.new("bri") end
+		puts @on
+		if (0..255) === value
+			@bri = value
+		else
+			raise InvalidValue.new("bri", value)
+		end
+	end
+	def ct=(value)
+		if !@on then raise DeviceOff.new("bri") end
+		@ct = value
+	end
+
 
 end

@@ -44,3 +44,18 @@ class UnauthorizedUser < HueError
 	end
 end
 
+class ResourceNotAvailable < HueError
+	def initialize(address)
+		super(3, "resource, #{address}, not available")
+		@address = address
+	end
+	def to_hash
+		super(@address)
+	end
+end
+class DeviceOff < HueError
+	def initialize(parameter)
+		super(201, "parameter, #{parameter}, is not modifiable. Device is off.")
+	end
+end
+
