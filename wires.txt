@@ -1,0 +1,16 @@
+5 pin molex
+===========
+
+- Green = Ground
+- Black = +12V
+- Others = Combined color sinks
+
+4 pin molex
+============
+Clip far away, left to right
+12V, Green, Blue, Red
+Or on the wires
+- Black = 12V
+- Red = Green
+- Orange = Blue
+- Yellow = Red
