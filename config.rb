@@ -30,7 +30,7 @@ class BridgeConfig
 			"name" => @name,
 			"mac" => "e0:f8:47:0c:77:8c", #TODO: get real addr
 			"dhcp" => true,
-			"ipaddress" => "192.168.1.3", #TODO: real ip
+			"ipaddress" => "129.21.135.16", #TODO: real ip
 			"netmask" => "255.255.255.0",
 			"gateway" => "192.168.1.1",
 			"proxyaddress" => "",

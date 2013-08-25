@@ -13,7 +13,7 @@ class State
 	attr_accessor :transitiontime #int, multiple of 100, in ms
 	def initialize
 		@on = false
-		@colormode = :hue
+		@colormode = :hs
 		@hue = 0
 		@sat = 255
 		@xy = [0.675,0.322]
@@ -22,7 +22,7 @@ class State
 		@effect = :none
 		@reachable = true
 		@bri = 255
-		@transitiontime = 400
+		@transitiontime = 4
 	end
 	def to_hash
 		{
@@ -48,7 +48,7 @@ class State
 		end
 	end
 	def hue=(value)
-		if !@on then raise DeviceOff.new("bri") end
+		if !@on then raise DeviceOff.new("hue") end
 		if (0..65535) === value
 			@hue = value
 			@colormode = :hs
@@ -57,7 +57,7 @@ class State
 		end
 	end
 	def sat=(value)
-		if !@on then raise DeviceOff.new("bri") end
+		if !@on then raise DeviceOff.new("sat") end
 		if (0..255) === value
 			@sat = value
 			@colormode = :hs
@@ -75,6 +75,8 @@ class State
 		end
 	end
 	def ct=(value)
+		if !@on then raise DeviceOff.new("ct") end
+		@ct = value
 		if value.integer?
 			@ct = value
 			@colormode = :ct
@@ -90,10 +92,6 @@ class State
 		else
 			raise InvalidValue.new("bri", value)
 		end
-	end
-	def ct=(value)
-		if !@on then raise DeviceOff.new("bri") end
-		@ct = value
 	end
 
 

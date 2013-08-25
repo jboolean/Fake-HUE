@@ -26,11 +26,14 @@ void getKnobs(unsigned int values[]){
    Tlc.set(rPin + 2, g);
  }
  
+//deleted code
  void setHsbLed(int n, int h, int s, int b){
     int red, green, blue;
+    
     HSBtoRGB(h, s, b, red, green, blue);
     setRgbLed(n, red, green, blue);
  }
+
 
 /*all values 0-4095*/
 /*from http://stackoverflow.com/questions/4123998/algorithm-to-switch-between-rgb-and-hsb-color-values*/

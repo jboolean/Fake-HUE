@@ -1,9 +1,12 @@
 
 //Packet data positions
-#define RED 0
-#define GREEN 1
-#define BLUE 2
-#define PACKETLENGTH 8
+#define LAMP 0
+#define TIME 1
+#define RED 2
+#define GREEN 3
+#define BLUE 4
+#define DATA_LENGTH 5
+#define PACKETLENGTH 10
 
 //Pins
 #define KNOB0 19

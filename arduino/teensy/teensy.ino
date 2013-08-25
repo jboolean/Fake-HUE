@@ -1,8 +1,11 @@
 #include "Tlc5940.h"
+#include "tlc_fades.h"
 #include <math.h>
 #include "helpers.h"
 #include "watchers.h"
 #include "config.h"
+
+
 
 byte mode = FADE_CYCLE;
 void setup(){
@@ -31,6 +34,7 @@ void loop(){
   checkKnobs(handleKnobsChangedSignificantly);//checks knobs for significant changes
   checkButtons(handleButtonPress);
   Tlc.update();
+  tlc_updateFades();
 }
 /***********
  * Mode loops
@@ -55,12 +59,16 @@ void fadeCycleLoop(){
 /***********
  * EVENT HANDLERS
  ***********/
+ int lastR = 0;
+ int lastG = 0;
+ int lastB = 0;
 /*
  Occurs when a complete packet is available
  readPacket() must be called as often as possible for this event to occur
  */
 void handlePacketReceived(unsigned int data[3]){
-  /*mode = SERIAL_CONTROL;
+  mode = SERIAL_CONTROL;
+  /*
   Serial.print("R: ");  
   Serial.println(data[RED], DEC);
   Serial.print("G: ");
@@ -68,7 +76,15 @@ void handlePacketReceived(unsigned int data[3]){
   Serial.print("B: ");
   Serial.println(data[BLUE], DEC);
   Serial.println("---------------");*/
-  setRgbLed(0,data[RED], data[GREEN], data[BLUE]);
+ int rPin = data[LAMP] *3;
+ uint32_t nowMillis = millis();
+tlc_addFade(rPin, lastR + 0, data[RED], nowMillis, nowMillis+data[TIME]*100);
+tlc_addFade(rPin, lastR + 1, data[BLUE], nowMillis, nowMillis+data[TIME]*100);
+tlc_addFade(rPin, lastR + 2, data[GREEN], nowMillis, nowMillis+data[TIME]*100);
+lastR = data[RED];
+lastG = data[GREEN];
+lastB = data[BLUE];
+  //setRgbLedWithFade(data[LAMP],data[TIME]*100, data[RED], data[GREEN], data[BLUE]);
 }
 
 /*
