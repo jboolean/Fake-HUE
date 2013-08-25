@@ -1,6 +1,0 @@
-- Hooking up and settings lights
-- Deciding on components
-- Programming standalone mode
-- Putting on a PCB
-- Putting in a case
-- Programming server
