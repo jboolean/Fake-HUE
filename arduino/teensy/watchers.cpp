@@ -37,7 +37,7 @@ void checkButtons(void (*handler)(int) ){
  * PACKET READING STUFF
  ********/
 //the incoming data packet
-unsigned int data[3];
+unsigned int data[DATA_LENGTH];
 
 //trigger every time data are available
 int pos = DATA_LENGTH;//pos in data, reset to 0 when header read

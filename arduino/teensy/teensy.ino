@@ -59,31 +59,31 @@ void fadeCycleLoop(){
 /***********
  * EVENT HANDLERS
  ***********/
- int lastR = 0;
- int lastG = 0;
- int lastB = 0;
+int lastR[4];
+int lastG[4];
+int lastB[4];
 /*
  Occurs when a complete packet is available
  readPacket() must be called as often as possible for this event to occur
  */
-void handlePacketReceived(unsigned int data[3]){
+void handlePacketReceived(unsigned int data[DATA_LENGTH]){
   mode = SERIAL_CONTROL;
-  /*
+  
   Serial.print("R: ");  
-  Serial.println(data[RED], DEC);
-  Serial.print("G: ");
-  Serial.println(data[GREEN], DEC);
-  Serial.print("B: ");
-  Serial.println(data[BLUE], DEC);
-  Serial.println("---------------");*/
- int rPin = data[LAMP] *3;
- uint32_t nowMillis = millis();
-tlc_addFade(rPin, lastR + 0, data[RED], nowMillis, nowMillis+data[TIME]*100);
-tlc_addFade(rPin, lastR + 1, data[BLUE], nowMillis, nowMillis+data[TIME]*100);
-tlc_addFade(rPin, lastR + 2, data[GREEN], nowMillis, nowMillis+data[TIME]*100);
-lastR = data[RED];
-lastG = data[GREEN];
-lastB = data[BLUE];
+   Serial.println(data[RED], DEC);
+   Serial.print("G: ");
+   Serial.println(data[GREEN], DEC);
+   Serial.print("B: ");
+   Serial.println(data[BLUE], DEC);
+   Serial.println("---------------");
+  int rPin = data[LAMP] *3;
+  uint32_t nowMillis = millis();
+  tlc_addFade(rPin + 0, lastR[data[LAMP]], data[RED], nowMillis, nowMillis+data[TIME]*100);
+  tlc_addFade(rPin + 1, lastB[data[LAMP]], data[BLUE], nowMillis, nowMillis+data[TIME]*100);
+  tlc_addFade(rPin + 2, lastG[data[LAMP]], data[GREEN], nowMillis, nowMillis+data[TIME]*100);
+  lastR[data[LAMP]] = data[RED];
+  lastG[data[LAMP]] = data[GREEN];
+  lastB[data[LAMP]] = data[BLUE];
   //setRgbLedWithFade(data[LAMP],data[TIME]*100, data[RED], data[GREEN], data[BLUE]);
 }
 
@@ -102,6 +102,7 @@ void handleButtonPress(int buttonId){
     mode = FADE_CYCLE;
   }
 }
+
 
 
 
